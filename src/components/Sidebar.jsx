@@ -50,9 +50,7 @@ const SidebarItem = ({ icon: Icon, label, active, onClick }) => {
   );
 };
 
-const Sidebar = () => {
-  const [activeTab, setActiveTab] = useState('dashboard');
-
+const Sidebar = ({ activeTab, setActiveTab }) => {
   const menuItems = [
     { id: 'dashboard', icon: LayoutDashboard, label: 'Terminal' },
     { id: 'risk', icon: Activity, label: 'Risk Heatmap' },
