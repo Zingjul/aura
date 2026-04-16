@@ -1,13 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import Sidebar from './Sidebar';
 import RiskHeatmap from './RiskHeatmap';
 import TransactionFeed from './TransactionFeed';
 import PortfolioIntel from './PortfolioIntel';
+import AssetDetailDrawer from './AssetDetailDrawer';
 
 const Dashboard = () => {
+  const [selectedAsset, setSelectedAsset] = useState(null);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+
+  const handleAssetClick = (asset) => {
+    setSelectedAsset(asset);
+    setIsDrawerOpen(true);
+  };
+
   return (
-    <div className="flex h-screen bg-[#050505] text-white overflow-hidden font-sans">
+    <div className="flex h-screen bg-[#050505] text-white overflow-hidden font-sans relative">
       <Sidebar />
       
       <main className="flex-1 md:pl-20 pb-16 md:pb-0 overflow-y-auto custom-scrollbar">
@@ -45,7 +54,7 @@ const Dashboard = () => {
           {/* Top Row: Risk Heatmap (Side Widget) - Collapses to full width on mobile */}
           <section className="col-span-12 xl:col-span-8 order-1">
              <div className="h-full">
-                <RiskHeatmap />
+                <RiskHeatmap onSquareClick={handleAssetClick} />
              </div>
           </section>
 
@@ -88,6 +97,12 @@ const Dashboard = () => {
 
         </div>
       </main>
+
+      <AssetDetailDrawer 
+        isOpen={isDrawerOpen} 
+        onClose={() => setIsDrawerOpen(false)} 
+        assetData={selectedAsset} 
+      />
     </div>
   );
 };

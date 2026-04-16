@@ -17,7 +17,7 @@ const getColor = (value) => {
   return 'var(--color-risk-safe)';
 };
 
-const HeatmapSquare = ({ value, label, index }) => (
+const HeatmapSquare = ({ value, label, index, onClick }) => (
   <motion.div
     initial={{ opacity: 0, scale: 0.9 }}
     animate={{ opacity: 1, scale: 1 }}
@@ -28,6 +28,7 @@ const HeatmapSquare = ({ value, label, index }) => (
       outline: '1px solid rgba(255,255,255,0.2)',
       boxShadow: '0 0 20px rgba(0,0,0,0.5)'
     }}
+    onClick={() => onClick({ value, label })}
     className="aspect-square rounded-[4px] relative group cursor-pointer"
     style={{ backgroundColor: getColor(value) }}
   >
@@ -44,7 +45,7 @@ const HeatmapSquare = ({ value, label, index }) => (
   </motion.div>
 );
 
-const RiskHeatmap = () => {
+const RiskHeatmap = ({ onSquareClick }) => {
   // Generate 8x8 grid (64 squares)
   const gridData = Array.from({ length: 64 }, (_, i) => ({
     id: i,
@@ -79,6 +80,7 @@ const RiskHeatmap = () => {
             index={i}
             value={data.value} 
             label={data.sector} 
+            onClick={onSquareClick}
           />
         ))}
       </div>
